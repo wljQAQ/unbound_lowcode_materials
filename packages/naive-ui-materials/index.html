@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./dist/naive-ui-materials.umd.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      {{ message }}
+
+      <component :is="Com"></component>
+    </div>
+
+    <script type="module">
+      import Material from './dist/naive-ui-materials.es.js';
+      const { createApp, ref, defineAsyncComponent } = Vue;
+      createApp({
+        setup() {
+          const message = ref('Hello vue!');
+          console.log(window.NaiveUIMaterials, Material);
+          //umd
+          // const Com = defineAsyncComponent(window.NaiveUIMaterials.componentsMap.NButton);
+          
+          //esmodule    这需要在vue环境下才能用
+          const Com = defineAsyncComponent(Material.componentsMap.NButton);
+          return {
+            message,
+            Com
+          };
+        }
+      }).mount('#app');
+    </script>
+  </body>
+</html>
